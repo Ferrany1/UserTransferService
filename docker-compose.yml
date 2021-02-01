@@ -1,0 +1,33 @@
+version: '3.1'
+
+networks:
+  postgre:
+    driver: bridge
+
+services:
+  postgre_bal:
+    restart: always
+    image: postgres:latest
+    container_name: postgre_bal
+    environment:
+      POSTGRES_DB:        balance
+      POSTGRES_USER:      test_user
+      POSTGRES_PASSWORD:  test_password
+    volumes:
+      - ./testing/test.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+  userService:
+    restart: always
+    image: golang:latest
+    container_name: userService
+    working_dir: "/UserTransferService/cmd"
+    command: go run balance_transfer.go
+    environment:
+      DOCKER: "true"
+    volumes:
+      - ./:/UserTransferService
+    ports:
+      - "8080:8080"
+      - "40013:40013"

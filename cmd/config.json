@@ -1,0 +1,16 @@
+{
+  "postgresDB": {
+    "domain":               "localhost",
+    "user":                 "test_user",
+    "password":             "test_password",
+    "dbname":               "balance",
+    "port":                 5432,
+    "tables": {
+      "users":      "users",
+      "balances":   "balances"
+    }
+  },
+  "ginRouter": {
+    "port": 8080
+  }
+}
